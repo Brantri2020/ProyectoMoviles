@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VerHorarioActivity">
+
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="670dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow
+            android:layout_width="670dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorApp">
+
+            <TextView
+                android:id="@+id/textViewHora"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:shadowColor="@color/colorApp"
+                android:text="@string/hora"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textViewLunes"
+                android:layout_width="89dp"
+                android:layout_height="wrap_content"
+                android:text="@string/lunes"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textViewMartes"
+                android:layout_width="89dp"
+                android:layout_height="wrap_content"
+                android:text="@string/martes"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textViewMiercoles"
+                android:layout_width="89dp"
+                android:layout_height="wrap_content"
+                android:text="@string/miercoles"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textViewJueves"
+                android:layout_width="89dp"
+                android:layout_height="wrap_content"
+                android:text="@string/jueves"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textViewViernes"
+                android:layout_width="89dp"
+                android:layout_height="wrap_content"
+                android:text="@string/viernes"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textViewSabado"
+                android:layout_width="89dp"
+                android:layout_height="wrap_content"
+                android:text="@string/sabado"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textViewDomingo"
+                android:layout_width="89dp"
+                android:layout_height="wrap_content"
+                android:text="@string/domingo"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+        </TableRow>
+    </TableLayout>
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TableLayout
+                android:id="@+id/tablaHorario"
+                android:layout_width="670dp"
+                android:layout_height="1050dp">
+
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textViewHora1"
+                        android:layout_width="45dp"
+                        android:layout_height="70dp"
+                        android:text="@string/Hora1"
+                        android:textSize="16sp" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textViewHora2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:text="@string/Hora2"
+                        android:textSize="16sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textViewHora3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:text="@string/Hora3"
+                        android:textSize="16sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textViewHora4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:text="@string/Hora4"
+                        android:textSize="16sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textViewHora5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:text="@string/Hora5"
+                        android:textSize="16sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textViewHora6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:text="@string/Hora6"
+                        android:textSize="16sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textViewHora7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:text="@string/Hora7"
+                        android:textSize="16sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textViewHora8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:text="@string/Hora8"
+                        android:textSize="16sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textViewHora9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:text="@string/Hora9"
+                        android:textSize="16sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textViewHora10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:text="@string/Hora10"
+                        android:textSize="16sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textViewHora11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:text="@string/Hora11"
+                        android:textSize="16sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textViewHora12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:text="@string/Hora12"
+                        android:textSize="16sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textViewHora13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:text="@string/Hora13"
+                        android:textSize="16sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textViewHora14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:text="@string/Hora14"
+                        android:textSize="16sp" />
+                </TableRow>
+
+            </TableLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

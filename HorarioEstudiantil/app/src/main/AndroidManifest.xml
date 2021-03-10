@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.proyecto.horarioestudiantil">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/horario_estudiantil"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.HorarioEstudiantil">
+
+        <activity android:name=".EliminarMateriaActivity" />
+            <!--android:parentActivityName=".InicioActivity"> -->
+
+        <activity
+            android:name=".RegistrarMateriaActivity"/>
+
+        <activity
+            android:name=".VerRecordatoriosActivity"/>
+
+        <activity
+            android:name=".RegistrarRecordatorioActivity"/>
+
+        <activity
+            android:name=".RegistrarHorarioActivity"
+            />
+        <activity
+            android:name=".VerHorarioActivity"
+            />
+
+        <!--
+        <activity
+            android:name=".PrincipalActivity"
+            android:label="@string/title_activity_principal"
+            android:theme="@style/Theme.HorarioEstudiantil.NoActionBar" />
+        -->
+        <activity android:name=".InicioActivity" />
+        <activity
+            android:name=".RegisterActivity" />
+        <activity android:name=".LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
