@@ -6,24 +6,31 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
 
 class InicioActivity : AppCompatActivity() {
+
+    var estudiantes = arrayListOf<EstudianteModelClass>()
+    var estudiantesIdDocumentos = ArrayList<String>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inicio)
         ///Cambiar a modo vertical
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
-        //Id del estudiante logueado
-        var idEstudiante:String
-        var nombreEstudiante:String
-        idEstudiante = intent.getStringExtra(ID_ESTUDIANTE).toString()
-        nombreEstudiante = intent.getStringExtra(NOMBRE_ESTUDIANTE).toString()
+        //Correo del estudiante logueado
+        var correoEstudiante:String
+        correoEstudiante = intent.getStringExtra(CORREO_ESTUDIANTE).toString()
+
 
         val actionBar = supportActionBar
         // Set the action bar title, subtitle and elevation
         actionBar!!.title = supportActionBar?.title.toString()
-        actionBar.subtitle = nombreEstudiante
+        //actionBar.subtitle = nombreEstudiante
         actionBar.elevation = 4.0F
 
 
@@ -31,7 +38,7 @@ class InicioActivity : AppCompatActivity() {
         val buttonRegistrarMateria = findViewById(R.id.btnRegistrarMateria) as Button
         buttonRegistrarMateria.setOnClickListener {
             val n = Intent(this, RegistrarMateriaActivity::class.java)
-            n.putExtra(ID_ESTUDIANTE,idEstudiante.toString())
+            n.putExtra(CORREO_ESTUDIANTE,correoEstudiante)
             startActivity(n)
 
         }
@@ -41,7 +48,7 @@ class InicioActivity : AppCompatActivity() {
         val buttonRegistrarHorario = findViewById(R.id.btnRegistrarHorario) as Button
         buttonRegistrarHorario.setOnClickListener {
             val i = Intent(this, RegistrarHorarioActivity::class.java)
-            i.putExtra(ID_ESTUDIANTE,idEstudiante.toString())
+           // i.putExtra(ID_ESTUDIANTE,idEstudiante.toString())
             startActivity(i)
 
         }
@@ -72,4 +79,8 @@ class InicioActivity : AppCompatActivity() {
         }
 
     }
+
+
+
+
 }

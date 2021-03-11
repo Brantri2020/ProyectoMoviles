@@ -86,7 +86,7 @@ class HorarioDbHelper(context: Context) :
 
 
     }
-
+/*
     fun createStudent(estudiante: EstudianteModelClass): Int {
 
         // Gets the data repository in write mode
@@ -97,7 +97,7 @@ class HorarioDbHelper(context: Context) :
             put(COLUMN_NAME_FIRSTNAME, estudiante.firstName)
             put(COLUMN_NAME_LASTNAME, estudiante.lastName)
             put(COLUMN_NAME_EMAIL, estudiante.emailAddress)
-            put(COLUMN_NAME_PASS, estudiante.pass)
+            //put(COLUMN_NAME_PASS, estudiante.pass)
         }
 
         // Insert the new row, returning the primary key value of the new row
@@ -106,7 +106,7 @@ class HorarioDbHelper(context: Context) :
         return newRowId!!.toInt()
 
     }
-
+*/
 
     fun readAllStudent(emailEnviado: String?, passEnviado: String?): Array<String> {
 

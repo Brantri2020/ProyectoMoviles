@@ -31,7 +31,7 @@ class RegistrarHorarioActivity : AppCompatActivity() {
 
         //Variable pasada
         var idEstudiante: String
-        idEstudiante = intent.getStringExtra(ID_ESTUDIANTE).toString()
+        idEstudiante = intent.getStringExtra(CORREO_ESTUDIANTE).toString()
         var idEstudiante_int: Int = idEstudiante.toInt()
 
         //Inicializar variables

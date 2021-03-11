@@ -9,12 +9,18 @@ import android.widget.EditText
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.proyecto.horarioestudiantil.database.HorarioDbHelper
 
 class RegistrarMateriaActivity : AppCompatActivity() {
 
-    var materias = arrayListOf<MateriaModelClass>()
-    var selectedSubjectPosition = 0
+    var estudiantes = arrayListOf<EstudianteModelClass>()
+    var selectedStudentPosition = 0
+
+    var estudiantesIdDocumentos = ArrayList<String>()
+    var idDocumentoEstudianteSeleccionado: String = ""
     lateinit var editTextTextNombreMateri: EditText
     lateinit var btnRegistrarMateri: Button
     lateinit var listViewSubjects: ListView
@@ -28,22 +34,20 @@ class RegistrarMateriaActivity : AppCompatActivity() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
 
-
         //Variable pasada
-        var idEstudiante: String
-        idEstudiante = intent.getStringExtra(ID_ESTUDIANTE).toString()
-        var idEstudiante_int:Int=idEstudiante.toInt()
+        var correoEstudiante: String
+        correoEstudiante = intent.getStringExtra(CORREO_ESTUDIANTE).toString()
 
         //Inicializar variables
         editTextTextNombreMateri = findViewById(R.id.editTextTextNombreMateri)
         btnRegistrarMateri = findViewById(R.id.btnRegistrarMateri)
         listViewSubjects = findViewById(R.id.listViewSchedule)
-        btnActualizarMateria= findViewById(R.id.btnActualizarHorarioApp)
-        btnDeleteMateria= findViewById(R.id.btnEliminarHorarioApp)
+        btnActualizarMateria = findViewById(R.id.btnActualizarHorarioApp)
+        btnDeleteMateria = findViewById(R.id.btnEliminarHorarioApp)
 
 
 
-        consultarMaterias(idEstudiante)
+        //consultarMaterias(idEstudiante)
 
         listViewSubjects.setOnItemClickListener { parent, view, position, id ->
             selectedSubjectPosition = position
@@ -58,13 +62,14 @@ class RegistrarMateriaActivity : AppCompatActivity() {
 
             val nombreMateria = editTextTextNombreMateri.text.toString()
 
-            val existe:Boolean=HorarioDbHelper(this).consultarMateria(nombreMateria)
+            val existe: Boolean = HorarioDbHelper(this).consultarMateria(nombreMateria)
 
-            if (nombreMateria != ""&&existe==false) {
+            if (nombreMateria != "" && existe == false) {
 
                 //contactos.add(ContactoModelClass(id,nombre,apellido,telefono, email))
                 val respuesta = HorarioDbHelper(this).createSubject(
-                    MateriaModelClass(1,
+                    MateriaModelClass(
+                        1,
                         nombreMateria,
                         idEstudiante_int
                     )
@@ -77,17 +82,17 @@ class RegistrarMateriaActivity : AppCompatActivity() {
                     editTextTextNombreMateri.setText("")
 
                     Toast.makeText(this, "Registrado con éxito", Toast.LENGTH_LONG).show()
-                    consultarMaterias(idEstudiante)
+                    //consultarMaterias(idEstudiante)
 
 
                 }
 
             } else {
 
-                if(existe){
+                if (existe) {
                     Toast.makeText(this, "El nombre de la materia ya existe", Toast.LENGTH_LONG)
                         .show()
-                }else {
+                } else {
                     Toast.makeText(this, "Debe poner el nombre de la materia", Toast.LENGTH_LONG)
                         .show()
                 }
@@ -107,17 +112,24 @@ class RegistrarMateriaActivity : AppCompatActivity() {
 
             val nombreMateria = editTextTextNombreMateri.text.toString()
 
-            val respuesta = HorarioDbHelper(this).actualizarMateria(MateriaModelClass(1,nombreMateria,idEstudiante_int),materias[selectedSubjectPosition].NameSubject.toString())
+            val respuesta = HorarioDbHelper(this).actualizarMateria(
+                MateriaModelClass(
+                    1,
+                    nombreMateria,
+                    idEstudiante_int
+                ), materias[selectedSubjectPosition].NameSubject.toString()
+            )
 
             if (respuesta == -1) {
-                Toast.makeText(this, "Error al actualizar la nueva materia", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Error al actualizar la nueva materia", Toast.LENGTH_LONG)
+                    .show()
             } else {
 
                 Toast.makeText(this, "Materia actualizada exitosamente", Toast.LENGTH_LONG).show()
             }
 
 
-            consultarMaterias(idEstudiante)
+            //consultarMaterias(idEstudiante)
         }
 
         btnDeleteMateria.setOnClickListener {
@@ -127,7 +139,8 @@ class RegistrarMateriaActivity : AppCompatActivity() {
             dialogBuilder.setPositiveButton("Eliminar", DialogInterface.OnClickListener { _, _ ->
                 //contactos.removeAt(selectedContactPosition)
 
-                val filasBorradas = HorarioDbHelper(this).eliminarMateria(materias[selectedSubjectPosition].NameSubject.toString())
+                val filasBorradas =
+                    HorarioDbHelper(this).eliminarMateria(materias[selectedSubjectPosition].NameSubject.toString())
 
                 if (filasBorradas < 1) {
                     Toast.makeText(this, "Error al eliminar materia", Toast.LENGTH_LONG).show()
@@ -136,25 +149,122 @@ class RegistrarMateriaActivity : AppCompatActivity() {
                     Toast.makeText(this, "Materia eliminada exitosamente", Toast.LENGTH_LONG).show()
                 }
 
-                consultarMaterias(idEstudiante)
+                //consultarMaterias(idEstudiante)
             })
-            dialogBuilder.setNegativeButton("Cancelar", DialogInterface.OnClickListener { dialog, which ->
-                //pass
-            })
+            dialogBuilder.setNegativeButton(
+                "Cancelar",
+                DialogInterface.OnClickListener { dialog, which ->
+                    //pass
+                })
             dialogBuilder.create().show()
         }
 
 
     }
-
-    fun consultarMaterias(idEstudiante: String?) {
+/*
+    fun consultarMateriasSQLLite(idEstudiante: String?) {
         materias = HorarioDbHelper(this).readAllSubjects(idEstudiante)
 
 
         //Poblar en listview informacion usando el adaptador
         val materiaAdapter = MateriaAdapter(this, materias)
         listViewSubjects.adapter = materiaAdapter
+        //limpiarCamposEditables()
+    }
+*/
+
+
+    fun consultarMaterias(correo:String) {
+        val db = Firebase.firestore
+        val docRef = db.collection(COLECCION).document(correo)
+            docRef.get()
+            .addOnSuccessListener { documentSnapshot ->
+                estudiantes.clear()
+                estudiantesIdDocumentos.clear()
+                val info = documentSnapshot.toObject<>()
+                for (documento in result) {
+                    val contacto = document.toObject(ContactoModelClass::class.java)
+                    contactos.add(contacto)
+                    contactosIdDocumentos.add(document.id)
+                }
+                //Poblar en ListView información usando mi adaptador
+                val contactoAdaptador = ContactoAdapter(this, contactos)
+                listViewContacts.adapter = contactoAdaptador
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(
+                    this,
+                    "Error al obtener datos de contactos:-> {$e.message}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         limpiarCamposEditables()
+    }
+
+    fun crearMaterias(contacto: ContactoModelClass) {
+        /*val contactoHashMap = hashMapOf(
+                "userId" to contactoNuevo.userId,
+                "firstName" to contactoNuevo.firstName,
+                "lastName" to contactoNuevo.lastName,
+                "phoneNumber" to contactoNuevo.phoneNumber,
+                "emailAddress" to contactoNuevo.emailAddress
+        )*/
+        val db = Firebase.firestore
+        db.collection("contactos")
+            .add(contacto) //.add(contactoHashMap)
+            .addOnSuccessListener { documentReference ->
+                Toast.makeText(this, "Contacto creado exitosamente", Toast.LENGTH_LONG).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(
+                    this,
+                    "Error al crear el contacto:-> {$e.message}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+    }
+
+    fun actualizarMaterias(contacto: ContactoModelClass, idDocumentoSeleccionado: String) {
+        /*val contactoHashMap = mapOf(
+                "userId" to contacto.userId,
+                "firstName" to contacto.firstName,
+                "lastName" to contacto.lastName,
+                "phoneNumber" to contacto.phoneNumber,
+                "emailAddress" to contacto.emailAddress
+        )*/
+        val db = Firebase.firestore
+        db.collection("contactos")
+            .document(idDocumentoSeleccionado)
+            //.update(contactoHashMap)
+            .set(contacto) //ootra forma de actualizar
+            .addOnSuccessListener {
+                Toast.makeText(this, "Contacto actualizado exitosamente", Toast.LENGTH_LONG).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(
+                    this,
+                    "Error al actualizar el contacto:-> {$e.message}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+    }
+
+
+    fun eliminarMaterias(idDocumentoSeleccionado: String) {
+        val db = Firebase.firestore
+        db.collection("contactos")
+            .document(idDocumentoSeleccionado)
+            .delete()
+            .addOnSuccessListener {
+                Toast.makeText(this, "Contacto eliminado exitosamente", Toast.LENGTH_LONG).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(
+                    this,
+                    "Error al eliminar el contacto:-> {$e.message}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
     }
 
 

@@ -95,4 +95,21 @@
     <string name="listHorario_Fin">Hora fin</string>
 
 
+    <!--LOGIN-->
+    <string name="editTextTextEmailAddress_hint">Ingrese el correo</string>
+    <string name="editTextPassword_hint">Ingrese la contraseña</string>
+    <string name="email_NoValido">Email no válido</string>
+    <string name="noExisteUsuario">El usuario introducido no existe</string>
+    <string name="Recordarme">Recordarme</string>
+
+    <!--Registro-->
+    <string name="Registrado">Registrado con éxito</string>
+    <string name="usuarioCreado">Usuario registrado con éxito</string>
+    <string name="passwordLongitud">La contraseña debe contener como mínimo 8 caracteres</string>
+    <string name="passwordNoCoinciden">Las contraseñas no coinciden</string>
+    <string name="nombreVacio">Introduzca su nombre</string>
+    <string name="apellidoVacio">Introduzca su apellido</string>
+
+
+
 </resources>
