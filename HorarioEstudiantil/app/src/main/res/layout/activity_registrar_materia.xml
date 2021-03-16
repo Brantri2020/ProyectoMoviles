@@ -20,10 +20,10 @@
 
     <ImageView
         android:id="@+id/imagenHorarioRegistrarMateria"
-        android:layout_width="127dp"
+        android:layout_width="0dp"
         android:layout_height="113dp"
         android:layout_marginTop="44dp"
-        android:src="@drawable/horario_estudiantil"
+        android:src="@drawable/ic_horario"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewTituloRegistrarMateria" />
@@ -52,16 +52,16 @@
         app:layout_constraintTop_toBottomOf="@+id/imagenHorarioRegistrarMateria" />
 
     <ListView
-        android:id="@+id/listViewSchedule"
+        android:id="@+id/listViewReminder"
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginBottom="24dp"
         android:background="@color/white"
         android:textColor="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,19 +70,18 @@
     </ListView>
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="0dp"
-        android:layout_height="87dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginBottom="24dp"
         android:gravity="center"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listViewSchedule">
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/btnRegistrarMateri"
@@ -91,14 +90,14 @@
             android:text="@string/registrar" />
 
         <Button
-            android:id="@+id/btnActualizarHorarioApp"
+            android:id="@+id/btnActualizarRec"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/actualizar" />
 
         <Button
-            android:id="@+id/btnEliminarHorarioApp"
+            android:id="@+id/btnEliminarRec"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/eliminar" />

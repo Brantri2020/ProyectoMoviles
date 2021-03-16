@@ -7,3 +7,6 @@ const val PASSWORD_KEY = "PASSWORD_KEY"
 const val ARCHIVO_PREFERENCES = "secret_shared_prefs"
 const val MIN_PASSWORD_LENGTH = 8
 const val COLECCION = "Horarios"
+const val COLECCION_MATERIAS = "Materias"
+const val RECORDATORIOS = "Recordatorios"
+

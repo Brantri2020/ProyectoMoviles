@@ -8,9 +8,11 @@
 
     <Button
         android:id="@+id/btnRegistrarMateria"
-        android:layout_width="237dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="50dp"
         android:text="@string/materia"
         app:backgroundTint="@color/colorApp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +24,7 @@
         android:layout_width="129dp"
         android:layout_height="102dp"
         android:layout_marginTop="4dp"
-        android:src="@drawable/horario_estudiantil"
+        android:src="@drawable/ic_horario"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,9 +57,11 @@
 
     <Button
         android:id="@+id/btnRegistrarHorario"
-        android:layout_width="237dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="50dp"
         android:text="@string/registrarHorario"
         app:backgroundTint="@color/colorApp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,9 +70,11 @@
 
     <Button
         android:id="@+id/btnVerHorario"
-        android:layout_width="237dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="50dp"
         android:text="@string/verHorario"
         app:backgroundTint="@color/colorApp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -77,34 +83,27 @@
 
     <Button
         android:id="@+id/btnRegistrarRecordatorio"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="8dp"
-        android:text="@string/registrarRecordatorio"
+        android:layout_marginEnd="50dp"
+        android:text="@string/recordatorios"
         app:backgroundTint="@color/colorApp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnVerHorario" />
 
     <Button
-        android:id="@+id/btnVerRecordatorio"
-        android:layout_width="237dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/verRecordatorio"
-        app:backgroundTint="@color/colorApp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnRegistrarRecordatorio" />
-
-    <Button
         android:id="@+id/btnSalir"
-        android:layout_width="237dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="50dp"
         android:text="@string/salir"
         app:backgroundTint="@color/colorApp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnVerRecordatorio" />
+        app:layout_constraintTop_toBottomOf="@+id/btnRegistrarRecordatorio" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,7 +14,7 @@ import androidx.security.crypto.MasterKeys
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.proyecto.horarioestudiantil.database.HorarioDbHelper
+
 
 class LoginActivity : AppCompatActivity() {
 
@@ -156,15 +156,5 @@ class LoginActivity : AppCompatActivity() {
 
 
 
-
-    fun consultarEstudiante(email: String?, pass: String?): Array<String> {
-        var arrayLogin = arrayOf("","")
-        var mensaje: String? = ""
-        var idEstudiante: String?=""
-        arrayLogin = HorarioDbHelper(this).readAllStudent(email, pass)
-
-        return arrayLogin
-
-    }
 
 }

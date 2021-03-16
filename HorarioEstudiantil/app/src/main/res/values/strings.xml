@@ -109,7 +109,11 @@
     <string name="passwordNoCoinciden">Las contraseñas no coinciden</string>
     <string name="nombreVacio">Introduzca su nombre</string>
     <string name="apellidoVacio">Introduzca su apellido</string>
-
+    <string name="Materia">materia</string>
+    <string name="Nombre">nombre</string>
+    <string name="tipoRecord">tipo de recordatorio</string>
+    <string name="descripcionRecord">descripcion</string>
+    <string name="recordatorios">Recordatorios</string>
 
 
 </resources>

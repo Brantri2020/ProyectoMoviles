@@ -8,4 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="colorApp">#3F51B5</color>
+    <color name="Fila1">#BEBEBE</color>
+    <color name="Color1">#F2F3F4</color>
+    <color name="UNO">#EBF5FB</color>
+    <color name="DOS">#D6EAF8</color>
 </resources>
