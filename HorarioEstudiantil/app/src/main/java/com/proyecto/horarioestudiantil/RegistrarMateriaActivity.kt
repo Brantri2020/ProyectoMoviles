@@ -2,19 +2,23 @@ package com.proyecto.horarioestudiantil
 
 import android.content.DialogInterface
 import android.content.pm.ActivityInfo
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.proyecto.horarioestudiantil.database.HorarioDbHelper
+import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class RegistrarMateriaActivity : AppCompatActivity() {
 
-    var materias = arrayListOf<MateriaModelClass>()
-    var selectedSubjectPosition = 0
+
+    var selectedStudentPosition = 0
+
+    var estudiantesIdDocumentos = ArrayList<String>()
+    var idDocumentoMateriaSeleccionado: String = ""
     lateinit var editTextTextNombreMateri: EditText
     lateinit var btnRegistrarMateri: Button
     lateinit var listViewSubjects: ListView
@@ -22,32 +26,34 @@ class RegistrarMateriaActivity : AppCompatActivity() {
     lateinit var btnActualizarMateria: Button
     lateinit var btnDeleteMateria: Button
 
+    val materias = mutableListOf<String>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registrar_materia)
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
 
-
         //Variable pasada
-        var idEstudiante: String
-        idEstudiante = intent.getStringExtra(ID_ESTUDIANTE).toString()
-        var idEstudiante_int:Int=idEstudiante.toInt()
+        var correoEstudiante: String
+        correoEstudiante = intent.getStringExtra(CORREO_ESTUDIANTE).toString()
+
 
         //Inicializar variables
         editTextTextNombreMateri = findViewById(R.id.editTextTextNombreMateri)
         btnRegistrarMateri = findViewById(R.id.btnRegistrarMateri)
-        listViewSubjects = findViewById(R.id.listViewSchedule)
-        btnActualizarMateria= findViewById(R.id.btnActualizarHorarioApp)
-        btnDeleteMateria= findViewById(R.id.btnEliminarHorarioApp)
+        listViewSubjects = findViewById(R.id.listViewReminder)
+        btnActualizarMateria = findViewById(R.id.btnActualizarRec)
+        btnDeleteMateria = findViewById(R.id.btnEliminarRec)
 
 
 
-        consultarMaterias(idEstudiante)
+        consultarMaterias(correoEstudiante)
+
 
         listViewSubjects.setOnItemClickListener { parent, view, position, id ->
-            selectedSubjectPosition = position
-            editTextTextNombreMateri.setText(materias[selectedSubjectPosition].NameSubject.toString())
+            selectedStudentPosition = position
+            editTextTextNombreMateri.setText(materias[selectedStudentPosition].toString())
         }
 
 
@@ -55,16 +61,19 @@ class RegistrarMateriaActivity : AppCompatActivity() {
 
         btnRegistrarMateri.setOnClickListener {
 
+            crearMaterias(correoEstudiante, editTextTextNombreMateri.text.toString())
+            /*
 
             val nombreMateria = editTextTextNombreMateri.text.toString()
 
-            val existe:Boolean=HorarioDbHelper(this).consultarMateria(nombreMateria)
+            val existe: Boolean = HorarioDbHelper(this).consultarMateria(nombreMateria)
 
-            if (nombreMateria != ""&&existe==false) {
+            if (nombreMateria != "" && existe == false) {
 
                 //contactos.add(ContactoModelClass(id,nombre,apellido,telefono, email))
                 val respuesta = HorarioDbHelper(this).createSubject(
-                    MateriaModelClass(1,
+                    MateriaModelClass(
+                        1,
                         nombreMateria,
                         idEstudiante_int
                     )
@@ -77,24 +86,26 @@ class RegistrarMateriaActivity : AppCompatActivity() {
                     editTextTextNombreMateri.setText("")
 
                     Toast.makeText(this, "Registrado con éxito", Toast.LENGTH_LONG).show()
-                    consultarMaterias(idEstudiante)
+                    //consultarMaterias(idEstudiante)
 
 
                 }
 
             } else {
 
-                if(existe){
+                if (existe) {
                     Toast.makeText(this, "El nombre de la materia ya existe", Toast.LENGTH_LONG)
                         .show()
-                }else {
+                } else {
                     Toast.makeText(this, "Debe poner el nombre de la materia", Toast.LENGTH_LONG)
                         .show()
                 }
             }
-
+*/
 
         }
+
+
 
         btnActualizarMateria.setOnClickListener {
             /* contactos[selectedContactPosition].userId = editTextUserId.text.toString().toInt()
@@ -106,57 +117,155 @@ class RegistrarMateriaActivity : AppCompatActivity() {
 
 
             val nombreMateria = editTextTextNombreMateri.text.toString()
-
-            val respuesta = HorarioDbHelper(this).actualizarMateria(MateriaModelClass(1,nombreMateria,idEstudiante_int),materias[selectedSubjectPosition].NameSubject.toString())
+            actualizarMaterias(
+                nombreMateria,
+                materias[selectedStudentPosition].toString(),
+                correoEstudiante
+            )
+/*
+            val respuesta = HorarioDbHelper(this).actualizarMateria(
+                MateriaModelClass(
+                    1,
+                    nombreMateria,
+                    idEstudiante_int
+                ), materias[selectedSubjectPosition].NameSubject.toString()
+            )
 
             if (respuesta == -1) {
-                Toast.makeText(this, "Error al actualizar la nueva materia", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Error al actualizar la nueva materia", Toast.LENGTH_LONG)
+                    .show()
             } else {
 
                 Toast.makeText(this, "Materia actualizada exitosamente", Toast.LENGTH_LONG).show()
             }
 
-
-            consultarMaterias(idEstudiante)
+*/
+            //consultarMaterias(idEstudiante)
         }
 
         btnDeleteMateria.setOnClickListener {
             val dialogBuilder = AlertDialog.Builder(this)
             dialogBuilder.setTitle("Confirmación de Eliminación")
-            dialogBuilder.setMessage("¿Esta seguro que desea eliminar la materia ${materias[selectedSubjectPosition].NameSubject}?")
+            dialogBuilder.setMessage("¿Esta seguro que desea eliminar la materia ${materias[selectedStudentPosition]}?")
             dialogBuilder.setPositiveButton("Eliminar", DialogInterface.OnClickListener { _, _ ->
-                //contactos.removeAt(selectedContactPosition)
+            //contactos.removeAt(selectedContactPosition)
+            eliminarMaterias(materias[selectedStudentPosition].toString(),correoEstudiante)
+                consultarMaterias(correoEstudiante)
 
-                val filasBorradas = HorarioDbHelper(this).eliminarMateria(materias[selectedSubjectPosition].NameSubject.toString())
-
-                if (filasBorradas < 1) {
-                    Toast.makeText(this, "Error al eliminar materia", Toast.LENGTH_LONG).show()
-                } else {
-
-                    Toast.makeText(this, "Materia eliminada exitosamente", Toast.LENGTH_LONG).show()
-                }
-
-                consultarMaterias(idEstudiante)
             })
-            dialogBuilder.setNegativeButton("Cancelar", DialogInterface.OnClickListener { dialog, which ->
-                //pass
-            })
+            dialogBuilder.setNegativeButton(
+                "Cancelar",
+                DialogInterface.OnClickListener { dialog, which ->
+                    //pass
+                })
             dialogBuilder.create().show()
         }
 
 
     }
 
-    fun consultarMaterias(idEstudiante: String?) {
-        materias = HorarioDbHelper(this).readAllSubjects(idEstudiante)
+
+    fun consultarMaterias(correo: String) {
+        val db = Firebase.firestore
+        val docRef = db.collection(COLECCION).document(correo).collection(COLECCION_MATERIAS)
+            .get()
+            .addOnSuccessListener { document ->
+                materias.clear()
+                estudiantesIdDocumentos.clear()
+
+                for (result in document) {
+                    materias.add(result.id)
+                }
+                //Poblar en ListView información usando mi adaptador
+                val contactoAdaptador = MateriaAdapter(this, materias as ArrayList<String>)
+                listViewSubjects.adapter = contactoAdaptador
 
 
-        //Poblar en listview informacion usando el adaptador
-        val materiaAdapter = MateriaAdapter(this, materias)
-        listViewSubjects.adapter = materiaAdapter
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(
+                    this,
+                    "Error al obtener datos de materias:-> {$e.message}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         limpiarCamposEditables()
     }
 
+    fun crearMaterias(correo: String, nombreMateria: String) {
+
+
+        val db = Firebase.firestore
+        db.collection(COLECCION).document(correo).collection(COLECCION_MATERIAS).document(
+            nombreMateria
+        ).set(MateriaModelClass(0))
+
+        consultarMaterias(correo)
+
+    }
+
+    fun actualizarMaterias(materia: String, idDocumentoSeleccionado: String, correo: String) {
+        /*val contactoHashMap = mapOf(
+                "userId" to contacto.userId,
+                "firstName" to contacto.firstName,
+                "lastName" to contacto.lastName,
+                "phoneNumber" to contacto.phoneNumber,
+                "emailAddress" to contacto.emailAddress
+        )*/
+        val db = Firebase.firestore
+
+        db.collection(COLECCION).document(correo).collection(COLECCION_MATERIAS).document(idDocumentoSeleccionado)
+        .get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    var data = document.data
+                    if (data != null) {
+                        db.collection(COLECCION).document(correo).collection(COLECCION_MATERIAS).document(materia).set(data)
+                        db.collection(COLECCION).document(correo).collection(COLECCION_MATERIAS).document(
+                            idDocumentoSeleccionado
+                        ).delete()
+                    }
+                } else {
+                    //Log.d(TAG, "No such document")
+                }
+            }
+
+        consultarMaterias(correo)
+
+
+        /*
+        .document(idDocumentoSeleccionado)
+        //.update(contactoHashMap)
+        .set(contacto) //ootra forma de actualizar
+        .addOnSuccessListener {
+            Toast.makeText(this, "Contacto actualizado exitosamente", Toast.LENGTH_LONG).show()
+        }
+        .addOnFailureListener { e ->
+            Toast.makeText(
+                this,
+                "Error al actualizar el contacto:-> {$e.message}",
+                Toast.LENGTH_LONG
+            ).show()
+        }*/
+    }
+
+
+    fun eliminarMaterias(idDocumentoSeleccionado: String,correo: String) {
+        val db = Firebase.firestore
+        db.collection(COLECCION).document(correo).collection(COLECCION_MATERIAS).document(
+            idDocumentoSeleccionado
+        ).delete()
+            .addOnSuccessListener {
+                Toast.makeText(this, "Materia eliminada exitosamente", Toast.LENGTH_LONG).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(
+                    this,
+                    "Error al eliminar LA MATERIA:-> {$e.message}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+    }
 
 
     private fun limpiarCamposEditables() {
