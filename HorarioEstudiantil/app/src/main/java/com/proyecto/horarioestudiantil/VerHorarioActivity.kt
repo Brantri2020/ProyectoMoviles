@@ -13,7 +13,7 @@ class VerHorarioActivity : AppCompatActivity() {
         setContentView(R.layout.activity_ver_horario)
 
 
-        ///Cambiar a modo horizontal
+        ///Cambiar a modo horizontall
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
 
 
