@@ -18,7 +18,7 @@ import com.google.firebase.ktx.Firebase
 
 class LoginActivity : AppCompatActivity() {
 
-    var estudiante = arrayListOf<EstudianteModelClass>()
+
     lateinit var buttonLogin: Button
     lateinit var buttonLinkRegister: Button
     lateinit var editTexCorreo: EditText
@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
         editTexPassword = findViewById<EditText>(R.id.editTextTextPassword)
         buttonLogin = findViewById<Button>(R.id.btnIngresar)
         buttonLinkRegister = findViewById<Button>(R.id.btnLinkRegistrar)
-        checkRecordarme= findViewById<CheckBox>(R.id.checkRecordar)
+        checkRecordarme = findViewById<CheckBox>(R.id.checkRecordar)
 
         //Inicializo llave
         val masterKeyAlias: String = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
@@ -59,7 +59,6 @@ class LoginActivity : AppCompatActivity() {
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
 
-        //val sharedPref = getPreferences(Context.MODE_PRIVATE)
 
         //Lectura de valores de archivo de preferencias en caso que exita
         login = sharedPreferences.getString(LOGIN_KEY, "")
@@ -74,16 +73,10 @@ class LoginActivity : AppCompatActivity() {
         buttonLogin.setOnClickListener {
             if (!ValidarDatos()) {
                 return@setOnClickListener
-            }else{
+            } else {
 
             }
             if (checkRecordarme.isChecked) {
-                /*sharedPref
-                    .edit()
-                    .putString(LOGIN_KEY,editTextTextEmailAddress.text.toString())
-                    .putString(PASSWORD_KEY,editTextTextPassword.text.toString())
-                    .apply()
-                */
                 sharedPreferences
                     .edit()
                     .putString(LOGIN_KEY, editTexCorreo.text.toString())
@@ -103,7 +96,7 @@ class LoginActivity : AppCompatActivity() {
 
 
 
-        buttonLinkRegister.setOnClickListener{
+        buttonLinkRegister.setOnClickListener {
             val i = Intent(this, RegisterActivity::class.java)
             startActivity(i)
 
@@ -115,12 +108,14 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     var intent = Intent(this, InicioActivity::class.java)
-                    intent.putExtra(CORREO_ESTUDIANTE,email)
+                    intent.putExtra(CORREO_ESTUDIANTE, email)
                     startActivity(intent)
                     finish()
                 } else {
-                    Toast.makeText(baseContext, task.exception!!.message,
-                        Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        baseContext, task.exception!!.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
                     editTexCorreo.setText("")
                     editTexPassword.setText("")
                 }
@@ -153,8 +148,6 @@ class LoginActivity : AppCompatActivity() {
 
         return true
     }
-
-
 
 
 }

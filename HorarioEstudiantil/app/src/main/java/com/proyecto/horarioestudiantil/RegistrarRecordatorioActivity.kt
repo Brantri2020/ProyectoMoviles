@@ -1,4 +1,3 @@
-
 package com.proyecto.horarioestudiantil
 
 import android.content.DialogInterface
@@ -14,7 +13,7 @@ import com.google.firebase.ktx.Firebase
 
 class RegistrarRecordatorioActivity : AppCompatActivity() {
 
-    var horariosIdDocumentos = ArrayList<String>()
+
     var recordatorios = arrayListOf<RecordatorioModelClass>()
     var materias = arrayListOf<String>()
     var ids = arrayListOf<Int>()
@@ -51,18 +50,7 @@ class RegistrarRecordatorioActivity : AppCompatActivity() {
         btnEliminarRec = findViewById(R.id.btnEliminarRec)
 
 
-        /*/////////////////////////////////ListView escuchador
-
-        */
-
         consultarRecordatorio(correoEstudiante)
-/*
-        listViewSchedule.setOnItemClickListener { parent, view, position, id ->
-            selectedSchedulePosition = position
-            //editTextTextNombreMateri.setText(materias[selectedSubjectPosition].NameSubject.toString())
-        }
-*/
-
         ///Llenar spinner Materia
 
         val subjects = ArrayList<String>()
@@ -108,8 +96,10 @@ class RegistrarRecordatorioActivity : AppCompatActivity() {
 
         ///Llenar spinner Tipo recordatorio
 
-        val tipoRecordatorio = arrayOf("Tarea", "Examen", "Prueba", "Trabajo grupal", "Revision", "Otro")
-        val arrayAdapterTipoRecordatorio = ArrayAdapter(this, android.R.layout.simple_spinner_item, tipoRecordatorio)
+        val tipoRecordatorio =
+            arrayOf("Tarea", "Examen", "Prueba", "Trabajo grupal", "Revision", "Otro")
+        val arrayAdapterTipoRecordatorio =
+            ArrayAdapter(this, android.R.layout.simple_spinner_item, tipoRecordatorio)
         spinnerTipoRecordatorio?.adapter = arrayAdapterTipoRecordatorio
 
         var tipoRecordatorioString: String = "Tipo recordatorio"
@@ -132,7 +122,6 @@ class RegistrarRecordatorioActivity : AppCompatActivity() {
 
             }
         }
-
 
 
         var seleccionado: String = ""
@@ -171,7 +160,12 @@ class RegistrarRecordatorioActivity : AppCompatActivity() {
 
 
             crearRecordatorio(
-                RecordatorioModelClass(nombreMateria, nombreRecordatorio, tipoRecordatorio, descripcionRecordatorio),
+                RecordatorioModelClass(
+                    nombreMateria,
+                    nombreRecordatorio,
+                    tipoRecordatorio,
+                    descripcionRecordatorio
+                ),
                 correoEstudiante
             )
             consultarRecordatorio(correoEstudiante)
@@ -186,7 +180,12 @@ class RegistrarRecordatorioActivity : AppCompatActivity() {
             val tipoRecordatorio = spinnerTipoRecordatorio.selectedItem.toString()
             val descripcionRecordatorio = txtDescripcionRec.text.toString()
             actualizarRecordatorio(
-                RecordatorioModelClass(nombreMateria, nombreRecordatorio, tipoRecordatorio, descripcionRecordatorio),
+                RecordatorioModelClass(
+                    nombreMateria,
+                    nombreRecordatorio,
+                    tipoRecordatorio,
+                    descripcionRecordatorio
+                ),
                 correoEstudiante,
                 RecordatorioModelClass(
                     recordatorios[selectedSchedulePosition].materia,
@@ -195,14 +194,7 @@ class RegistrarRecordatorioActivity : AppCompatActivity() {
                     recordatorios[selectedSchedulePosition].descripcion
                 )
             )
-            /*
-            val respuesta = ContactDbHelper(this).updateContact(ContactoModelClass(id,nombre,apellido,telefono, email))
-            if(respuesta == -1) {
-                Toast.makeText(this,"Error al actualizar el contacto", Toast.LENGTH_LONG).show()
-            }
-            else{
-                Toast.makeText(this,"Contacto actualizado exitosamente", Toast.LENGTH_LONG).show()
-            }*/
+
             consultarRecordatorio(correoEstudiante)
 
 
@@ -210,39 +202,31 @@ class RegistrarRecordatorioActivity : AppCompatActivity() {
 
         btnEliminarRec.setOnClickListener {
             val dialogBuilder = AlertDialog.Builder(this)
-            dialogBuilder.setTitle("Confirmación de Eliminación")
-            //dialogBuilder.setIcon(R.drawable.ic_warning)
-            dialogBuilder.setMessage("¿Esta seguro que desea eliminar el recordatorio?")
-            dialogBuilder.setPositiveButton("Eliminar", DialogInterface.OnClickListener { _, _ ->
-                /*//contactos.removeAt(selectedContactPosition)
-                val userId = editTextUserId.text.toString().toInt()
-                val filasBorradas = ContactDbHelper(this).deleteContact(userId)
-                if(filasBorradas == 0) {
-                    Toast.makeText(this,"Error al eliminar el contacto", Toast.LENGTH_LONG).show()
-                }
-                else{
-                    Toast.makeText(this,"Contacto eliminado exitosamente", Toast.LENGTH_LONG).show()
-                }*/
-                eliminarRecordatorio(
-                    correoEstudiante,
-                    RecordatorioModelClass(
-                        recordatorios[selectedSchedulePosition].materia,
-                        recordatorios[selectedSchedulePosition].nombre,
-                        recordatorios[selectedSchedulePosition].tipo,
-                        recordatorios[selectedSchedulePosition].descripcion
-                    )
-                )
+            dialogBuilder.setTitle(R.string.horarioEliminado)
 
-                consultarRecordatorio(correoEstudiante)
-            })
+            dialogBuilder.setMessage(R.string.preguntaRecordatorio)
+            dialogBuilder.setPositiveButton(
+                R.string.borrar,
+                DialogInterface.OnClickListener { _, _ ->
+
+                    eliminarRecordatorio(
+                        correoEstudiante,
+                        RecordatorioModelClass(
+                            recordatorios[selectedSchedulePosition].materia,
+                            recordatorios[selectedSchedulePosition].nombre,
+                            recordatorios[selectedSchedulePosition].tipo,
+                            recordatorios[selectedSchedulePosition].descripcion
+                        )
+                    )
+
+                    consultarRecordatorio(correoEstudiante)
+                })
             dialogBuilder.setNegativeButton(
                 "Cancel",
                 DialogInterface.OnClickListener { dialog, which ->
                     //pass
                 })
             dialogBuilder.create().show()
-
-            //////----/////
 
 
         }
@@ -276,7 +260,7 @@ class RegistrarRecordatorioActivity : AppCompatActivity() {
                                         ).toString(), result2.get("descripcion").toString()
                                     )
                                 )
-                                //Log.d("jfihasi",horario.toString())
+
 
                             }
 
@@ -289,9 +273,6 @@ class RegistrarRecordatorioActivity : AppCompatActivity() {
 
 
                 }
-                //Poblar en ListView información usando mi adaptador
-                //val contactoAdaptador = MateriaAdapter(this, materias as ArrayList<String>)
-                //listViewSubjects.adapter = contactoAdaptador
 
 
             }
@@ -326,10 +307,10 @@ class RegistrarRecordatorioActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { document ->
                 for (result in document) {
-                    //contador++
+
                     ids.add(result.id.toInt())
                 }
-                id=devolverId(ids)
+                id = devolverId(ids)
                 db.collection(COLECCION).document(correo).collection(COLECCION_MATERIAS)
                     .document(recordatorio.materia).collection(
                         RECORDATORIOS
@@ -340,9 +321,9 @@ class RegistrarRecordatorioActivity : AppCompatActivity() {
                             recordatorio.tipo,
                             recordatorio.descripcion
                         )
-                    ) //.add(contactoHashMap)
+                    )
                     .addOnSuccessListener { documentReference ->
-                        Toast.makeText(this, "Recordatorio creado exitosamente", Toast.LENGTH_LONG)
+                        Toast.makeText(this, R.string.recordatorioCreado, Toast.LENGTH_LONG)
                             .show()
                     }
                     .addOnFailureListener { e ->
@@ -366,7 +347,7 @@ class RegistrarRecordatorioActivity : AppCompatActivity() {
                         )
                     ) //.add(contactoHashMap)
                     .addOnSuccessListener { documentReference ->
-                        Toast.makeText(this, "Recordatorio creado exitosamente", Toast.LENGTH_LONG)
+                        Toast.makeText(this, R.string.recordatorioCreado, Toast.LENGTH_LONG)
                             .show()
                     }
                     .addOnFailureListener { e ->
@@ -392,10 +373,10 @@ class RegistrarRecordatorioActivity : AppCompatActivity() {
 
         if (!recordatorioNuevo.materia.equals(recordatorioViejo.materia)) {
 
-            crearRecordatorio(recordatorioNuevo,correo)
-            eliminarRecordatorio(correo,recordatorioViejo)
+            crearRecordatorio(recordatorioNuevo, correo)
+            eliminarRecordatorio(correo, recordatorioViejo)
 
-        }else{
+        } else {
 
 
             val docRef = db.collection(COLECCION).document(correo).collection(COLECCION_MATERIAS)
@@ -430,7 +411,11 @@ class RegistrarRecordatorioActivity : AppCompatActivity() {
                             )
                         ) //.add(contactoHashMap)
                         .addOnSuccessListener { documentReference ->
-                            Toast.makeText(this, "Recordatorio actualizado exitosamente", Toast.LENGTH_LONG)
+                            Toast.makeText(
+                                this,
+                                R.string.recordatorioActualizado,
+                                Toast.LENGTH_LONG
+                            )
                                 .show()
                         }
                         .addOnFailureListener { e ->
@@ -444,8 +429,10 @@ class RegistrarRecordatorioActivity : AppCompatActivity() {
         }
     }
 
-    fun eliminarRecordatorio( correo: String,
-                         recordatorioViejo: RecordatorioModelClass) {
+    fun eliminarRecordatorio(
+        correo: String,
+        recordatorioViejo: RecordatorioModelClass
+    ) {
 
         val db = Firebase.firestore
 
@@ -470,12 +457,13 @@ class RegistrarRecordatorioActivity : AppCompatActivity() {
 
                 //val db = Firebase.firestore
                 db.collection(COLECCION)
-                    .document(correo).collection(COLECCION_MATERIAS).document(recordatorioViejo.materia)
+                    .document(correo).collection(COLECCION_MATERIAS)
+                    .document(recordatorioViejo.materia)
                     .collection(RECORDATORIOS)
                     .document(idDocumento)
                     .delete()
                     .addOnSuccessListener {
-                        Toast.makeText(this, "Recordatorio eliminado exitosamente", Toast.LENGTH_LONG)
+                        Toast.makeText(this, R.string.recordatorioEliminado, Toast.LENGTH_LONG)
                             .show()
                     }
                     .addOnFailureListener { e ->
@@ -487,6 +475,7 @@ class RegistrarRecordatorioActivity : AppCompatActivity() {
                     }
             }
     }
+
     private fun getIndex(spinner: Spinner, myString: String): Int {
         for (i in 0 until spinner.count) {
             if (spinner.getItemAtPosition(i).toString().equals(myString, ignoreCase = true)) {
@@ -496,13 +485,13 @@ class RegistrarRecordatorioActivity : AppCompatActivity() {
         return 0
     }
 
-    private fun devolverId(arrayList: ArrayList<Int>):Int{
-        var id:Int=0
+    private fun devolverId(arrayList: ArrayList<Int>): Int {
+        var id: Int = 0
         arrayList.add(-1)
-        for(i in 1 .. arrayList.size){
+        for (i in 1..arrayList.size) {
 
-            if(i != arrayList[i-1]){
-                id= i
+            if (i != arrayList[i - 1]) {
+                id = i
                 break
             }
 
@@ -512,7 +501,6 @@ class RegistrarRecordatorioActivity : AppCompatActivity() {
 
         return id
     }
-
 
 
 }

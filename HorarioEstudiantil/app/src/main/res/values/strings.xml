@@ -115,5 +115,25 @@
     <string name="descripcionRecord">descripcion</string>
     <string name="recordatorios">Recordatorios</string>
 
+    <!--Registrar horario-->
+    <string name="horarioEliminado">Confirmacion de Eliminación</string>
+
+    <string name="preguntaHorarioEliminar">¿Esta seguro que desea eliminar el horario?</string>
+    <string name="horarioExito">Horario creado exitosamente</string>
+    <string name="horarioActualizado">Horario actualizado exitosamente</string>
+    <string name="horarioEliminadoExitoso">Horario eliminado exitosamente</string>
+    <string name="materiaEliminada">Materia eliminada exitosamente</string>
+    <string name="preguntaRecordatorio">¿Esta seguro que desea eliminar el recordatorio?</string>
+    <string name="recordatorioCreado">Recordatorio creado exitosamente</string>
+    <string name="recordatorioActualizado">Recordatorio actualizado exitosamente</string>
+    <string name="recordatorioEliminado">Recordatorio eliminado exitosamente</string>
+    <string name="materiaList">Materia</string>
+
+
+
+    <string name="borrar">Eliminar</string>
+    <string name="cancelar">Cancelar</string>
+
+
 
 </resources>

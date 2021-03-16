@@ -16,6 +16,7 @@ class InicioActivity : AppCompatActivity() {
 
     var estudiantes = arrayListOf<EstudianteModelClass>()
     var estudiantesIdDocumentos = ArrayList<String>()
+
     // Access a Cloud Firestore instance from your Activity
     val db = Firebase.firestore
 
@@ -32,8 +33,6 @@ class InicioActivity : AppCompatActivity() {
         nombresEstudiante(correoEstudiante)
 
 
-
-
         val buttonRegistrarMateria = findViewById(R.id.btnRegistrarMateria) as Button
         buttonRegistrarMateria.setOnClickListener {
             val n = Intent(this, RegistrarMateriaActivity::class.java)
@@ -43,11 +42,10 @@ class InicioActivity : AppCompatActivity() {
         }
 
 
-
         val buttonRegistrarHorario = findViewById(R.id.btnRegistrarHorario) as Button
         buttonRegistrarHorario.setOnClickListener {
             val i = Intent(this, RegistrarHorarioActivity::class.java)
-           i.putExtra(CORREO_ESTUDIANTE,correoEstudiante)
+            i.putExtra(CORREO_ESTUDIANTE, correoEstudiante)
             startActivity(i)
 
         }
@@ -63,7 +61,7 @@ class InicioActivity : AppCompatActivity() {
         val buttonRegistrarRecordatorio = findViewById(R.id.btnRegistrarRecordatorio) as Button
         buttonRegistrarRecordatorio.setOnClickListener {
             val j = Intent(this, RegistrarRecordatorioActivity::class.java)
-            j.putExtra(CORREO_ESTUDIANTE,correoEstudiante)
+            j.putExtra(CORREO_ESTUDIANTE, correoEstudiante)
             startActivity(j)
         }
 
@@ -78,40 +76,39 @@ class InicioActivity : AppCompatActivity() {
     }
 
 
-fun nombresEstudiante(correo:String){
+    fun nombresEstudiante(correo: String) {
 
-    var nombres:String=""
-    var nombre:String=""
-    var apellido:String=""
-    val docRef = db.collection(COLECCION).document(correo)
+        var nombres: String = ""
+        var nombre: String = ""
+        var apellido: String = ""
+        val docRef = db.collection(COLECCION).document(correo)
 
-    docRef.get()
-        .addOnSuccessListener { document ->
-            if (document != null) {
+        docRef.get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
 
-                nombre=document.get("nombre").toString()
-                apellido=document.get("apellido").toString()
+                    nombre = document.get(NOMBRE_ESTUDIANTE).toString()
+                    apellido = document.get(APELLIDO_ESTUDIANTE).toString()
 
-                nombres=nombre+" "+apellido
+                    nombres = nombre + " " + apellido
 
-                val actionBar = supportActionBar
-                // Set the action bar title, subtitle and elevation
-                actionBar!!.title = supportActionBar?.title.toString()
-                actionBar.subtitle = nombres
-                actionBar.elevation = 4.0F
+                    val actionBar = supportActionBar
+                    // Set the action bar title, subtitle and elevation
+                    actionBar!!.title = supportActionBar?.title.toString()
+                    actionBar.subtitle = nombres
+                    actionBar.elevation = 4.0F
 
 
-            } else {
-                // Log.d(TAG, "No such document")
+                } else {
+                    // Log.d(TAG, "No such document")
+                }
             }
-        }
-        .addOnFailureListener { exception ->
-            //Log.d(TAG, "get failed with ", exception)
-        }
+            .addOnFailureListener { exception ->
+                //Log.d(TAG, "get failed with ", exception)
+            }
 
 
-}
-
+    }
 
 
 }

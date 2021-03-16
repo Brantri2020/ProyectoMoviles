@@ -49,15 +49,18 @@ class RegisterActivity : AppCompatActivity() {
         btnRegistrar.setOnClickListener {
 
             if (ValidarDatos()) {
-                //return@setOnClickListener
-                SignUpNewUser(editTextCorreoRegistro.text.toString(),editTextContraseñaRegistro.text.toString(),editTextNombre.text.toString(),editTextApellido.text.toString())
-                //Toast.makeText(this, getString(R.string.Registrado), Toast.LENGTH_SHORT).show()
+
+                SignUpNewUser(
+                    editTextCorreoRegistro.text.toString(),
+                    editTextContraseñaRegistro.text.toString(),
+                    editTextNombre.text.toString(),
+                    editTextApellido.text.toString()
+                )
+
                 var intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
             }
-
-
 
 
         }
@@ -66,30 +69,29 @@ class RegisterActivity : AppCompatActivity() {
     }
 
 
-
-
-
-
-    fun SignUpNewUser(email:String, password:String, nombre:String,apellido:String){
+    fun SignUpNewUser(email: String, password: String, nombre: String, apellido: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     //val user = auth.currentUser
-              Toast.makeText(baseContext, getString(R.string.usuarioCreado),
-                        Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        baseContext, getString(R.string.usuarioCreado),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     crearEstudiante(EstudianteModelClass(nombre, apellido, email))
 
 
                 } else {
-                    Toast.makeText(baseContext, task.exception!!.message,
-                        Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        baseContext, task.exception!!.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
 
             }
 
     }
-
 
 
     fun ValidarDatos(): Boolean {
@@ -141,7 +143,9 @@ class RegisterActivity : AppCompatActivity() {
             return false
         }
 
-        if(!editTextContraseñaRegistro.text.toString().equals(editTextContraseñaRegistro2.text.toString())){
+        if (!editTextContraseñaRegistro.text.toString()
+                .equals(editTextContraseñaRegistro2.text.toString())
+        ) {
             editTextContraseñaRegistro.setError(getString(R.string.passwordNoCoinciden))
             editTextContraseñaRegistro2.setError(getString(R.string.passwordNoCoinciden))
             editTextContraseñaRegistro.setText("")
@@ -150,47 +154,19 @@ class RegisterActivity : AppCompatActivity() {
             return false
         }
 
-
-
-
         return true
     }
 
 
-
     fun crearEstudiante(estudiante: EstudianteModelClass) {
-        /*val contactoHashMap = hashMapOf(
-                "userId" to contactoNuevo.userId,
-                "firstName" to contactoNuevo.firstName,
-                "lastName" to contactoNuevo.lastName,
-                "phoneNumber" to contactoNuevo.phoneNumber,
-                "emailAddress" to contactoNuevo.emailAddress
-        )*/
-
-
-
         val db = Firebase.firestore
 
         db.collection(COLECCION).document(estudiante.Correo)
             .set(estudiante)
-            .addOnSuccessListener {  }
-            .addOnFailureListener {  }
+            .addOnSuccessListener { }
+            .addOnFailureListener { }
 
-        /*
-        db.collection(COLECCION).doc()
-            .add(estudiante) //.add(contactoHashMap)
-            .addOnSuccessListener { documentReference ->
-                Toast.makeText(this,"Contacto creadoo exitosamente", Toast.LENGTH_LONG).show()
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(
-                    this,
-                    "Error al crear el estudiante:-> {$e.message}",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
 
-         */
     }
 
 

@@ -13,9 +13,8 @@ import com.google.firebase.ktx.Firebase
 
 class RegistrarHorarioActivity : AppCompatActivity() {
 
-    var horariosIdDocumentos = ArrayList<String>()
+
     var horarios = arrayListOf<HorarioModelClass>()
-    var materias = arrayListOf<String>()
     var ids = arrayListOf<Int>()
     var selectedSchedulePosition = 0
     lateinit var spinnerMateria: Spinner
@@ -50,16 +49,8 @@ class RegistrarHorarioActivity : AppCompatActivity() {
         btnEliminarHorarioApp = findViewById(R.id.btnEliminarRec)
 
 
-        /*/////////////////////////////////ListView escuchador
 
-        */
         consultarHorario(correoEstudiante)
-/*
-        listViewSchedule.setOnItemClickListener { parent, view, position, id ->
-            selectedSchedulePosition = position
-            //editTextTextNombreMateri.setText(materias[selectedSubjectPosition].NameSubject.toString())
-        }
-*/
 
         ///Llenar spinner Materia
 
@@ -106,7 +97,7 @@ class RegistrarHorarioActivity : AppCompatActivity() {
 
         ///Llenar spinner Dia
 
-        val dia = arrayOf("Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo")
+        val dia = arrayOf(LUNES, MARTES, MIERCOLES, JUEVES, VIERNES, SABADO, DOMINGO)
         val arrayAdapterDia = ArrayAdapter(this, android.R.layout.simple_spinner_item, dia)
         spinnerDia?.adapter = arrayAdapterDia
 
@@ -287,14 +278,7 @@ class RegistrarHorarioActivity : AppCompatActivity() {
                     horarios[selectedSchedulePosition].horaFin
                 )
             )
-            /*
-            val respuesta = ContactDbHelper(this).updateContact(ContactoModelClass(id,nombre,apellido,telefono, email))
-            if(respuesta == -1) {
-                Toast.makeText(this,"Error al actualizar el contacto", Toast.LENGTH_LONG).show()
-            }
-            else{
-                Toast.makeText(this,"Contacto actualizado exitosamente", Toast.LENGTH_LONG).show()
-            }*/
+
             consultarHorario(correoEstudiante)
 
 
@@ -302,33 +286,27 @@ class RegistrarHorarioActivity : AppCompatActivity() {
 
         btnEliminarHorarioApp.setOnClickListener {
             val dialogBuilder = AlertDialog.Builder(this)
-            dialogBuilder.setTitle("Confirmación de Eliminación")
-            //dialogBuilder.setIcon(R.drawable.ic_warning)
-            dialogBuilder.setMessage("¿Esta seguro que desea eliminar el horario?")
-            dialogBuilder.setPositiveButton("Eliminar", DialogInterface.OnClickListener { _, _ ->
-                /*//contactos.removeAt(selectedContactPosition)
-                val userId = editTextUserId.text.toString().toInt()
-                val filasBorradas = ContactDbHelper(this).deleteContact(userId)
-                if(filasBorradas == 0) {
-                    Toast.makeText(this,"Error al eliminar el contacto", Toast.LENGTH_LONG).show()
-                }
-                else{
-                    Toast.makeText(this,"Contacto eliminado exitosamente", Toast.LENGTH_LONG).show()
-                }*/
-                eliminarHorario(
-                    correoEstudiante,
-                    HorarioModelClass(
-                        horarios[selectedSchedulePosition].materia,
-                        horarios[selectedSchedulePosition].dia,
-                        horarios[selectedSchedulePosition].horaInicio,
-                        horarios[selectedSchedulePosition].horaFin
-                    )
-                )
+            dialogBuilder.setTitle(R.string.horarioEliminado)
 
-                consultarHorario(correoEstudiante)
-            })
+            dialogBuilder.setMessage(R.string.preguntaHorarioEliminar)
+            dialogBuilder.setPositiveButton(
+                R.string.borrar,
+                DialogInterface.OnClickListener { _, _ ->
+
+                    eliminarHorario(
+                        correoEstudiante,
+                        HorarioModelClass(
+                            horarios[selectedSchedulePosition].materia,
+                            horarios[selectedSchedulePosition].dia,
+                            horarios[selectedSchedulePosition].horaInicio,
+                            horarios[selectedSchedulePosition].horaFin
+                        )
+                    )
+
+                    consultarHorario(correoEstudiante)
+                })
             dialogBuilder.setNegativeButton(
-                "Cancel",
+                R.string.cancelar,
                 DialogInterface.OnClickListener { dialog, which ->
                     //pass
                 })
@@ -349,7 +327,7 @@ class RegistrarHorarioActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { document ->
                 for (result in document) {
-                    //horarios.clear()
+
 
                     db.collection(COLECCION).document(correo).collection(COLECCION_MATERIAS)
                         .document(result.id).collection(
@@ -357,7 +335,7 @@ class RegistrarHorarioActivity : AppCompatActivity() {
                         )
                         .get()
                         .addOnSuccessListener { document2 ->
-                            //horarios.clear()
+
                             for (result2 in document2) {
 
 
@@ -368,8 +346,6 @@ class RegistrarHorarioActivity : AppCompatActivity() {
                                         ).toString(), result2.get("horaFin").toString()
                                     )
                                 )
-                                //Log.d("jfihasi",horario.toString())
-
                             }
 
                             //Poblar en ListView información usando mi adaptador
@@ -381,9 +357,6 @@ class RegistrarHorarioActivity : AppCompatActivity() {
 
 
                 }
-                //Poblar en ListView información usando mi adaptador
-                //val contactoAdaptador = MateriaAdapter(this, materias as ArrayList<String>)
-                //listViewSubjects.adapter = contactoAdaptador
 
 
             }
@@ -408,13 +381,7 @@ class RegistrarHorarioActivity : AppCompatActivity() {
 
     fun crearHorario(horario: HorarioModelClass, correo: String) {
 
-        /*val contactoHashMap = hashMapOf(
-                "userId" to contactoNuevo.userId,
-                "firstName" to contactoNuevo.firstName,
-                "lastName" to contactoNuevo.lastName,
-                "phoneNumber" to contactoNuevo.phoneNumber,
-                "emailAddress" to contactoNuevo.emailAddress
-        )*/
+
         val db = Firebase.firestore
         ids.clear()
         var id: Int = 1
@@ -425,10 +392,10 @@ class RegistrarHorarioActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { document ->
                 for (result in document) {
-                    //contador++
+
                     ids.add(result.id.toInt())
                 }
-            id=devolverId(ids)
+                id = devolverId(ids)
                 db.collection(COLECCION).document(correo).collection(COLECCION_MATERIAS)
                     .document(horario.materia).collection(
                         COLECCION
@@ -439,9 +406,9 @@ class RegistrarHorarioActivity : AppCompatActivity() {
                             horario.horaInicio,
                             horario.horaFin
                         )
-                    ) //.add(contactoHashMap)
+                    )
                     .addOnSuccessListener { documentReference ->
-                        Toast.makeText(this, "Horario creado exitosamente", Toast.LENGTH_LONG)
+                        Toast.makeText(this, R.string.horarioExito, Toast.LENGTH_LONG)
                             .show()
                     }
                     .addOnFailureListener { e ->
@@ -463,9 +430,9 @@ class RegistrarHorarioActivity : AppCompatActivity() {
                             horario.horaInicio,
                             horario.horaFin
                         )
-                    ) //.add(contactoHashMap)
+                    )
                     .addOnSuccessListener { documentReference ->
-                        Toast.makeText(this, "Horario creado exitosamente", Toast.LENGTH_LONG)
+                        Toast.makeText(this, R.string.horarioExito, Toast.LENGTH_LONG)
                             .show()
                     }
                     .addOnFailureListener { e ->
@@ -491,60 +458,66 @@ class RegistrarHorarioActivity : AppCompatActivity() {
 
         if (!horarioNuevo.materia.equals(horarioViejo.materia)) {
 
-            crearHorario(horarioNuevo,correo)
-            eliminarHorario(correo,horarioViejo)
+            crearHorario(horarioNuevo, correo)
+            eliminarHorario(correo, horarioViejo)
 
-        }else{
-
-
-        val docRef = db.collection(COLECCION).document(correo).collection(COLECCION_MATERIAS)
-            .document(horarioViejo.materia).collection(
-                COLECCION
-            )
-            .get()
-            .addOnSuccessListener { document ->
-                for (result in document) {
+        } else {
 
 
-                    if (result.get("dia").toString()
-                            .equals(horarioViejo.dia) && result.get("horaInicio")
-                            .toString()
-                            .equals(horarioViejo.horaInicio) && result.get("horaFin")
-                            .toString().equals(horarioViejo.horaFin)
-                    ) {
-                        idDocumento = result.id
+            val docRef = db.collection(COLECCION).document(correo).collection(COLECCION_MATERIAS)
+                .document(horarioViejo.materia).collection(
+                    COLECCION
+                )
+                .get()
+                .addOnSuccessListener { document ->
+                    for (result in document) {
+
+
+                        if (result.get("dia").toString()
+                                .equals(horarioViejo.dia) && result.get("horaInicio")
+                                .toString()
+                                .equals(horarioViejo.horaInicio) && result.get("horaFin")
+                                .toString().equals(horarioViejo.horaFin)
+                        ) {
+                            idDocumento = result.id
+                        }
                     }
+
+                    db.collection(COLECCION).document(correo).collection(COLECCION_MATERIAS)
+                        .document(horarioViejo.materia).collection(
+                            COLECCION
+                        ).document(idDocumento)
+                        .set(
+                            HorarioModelClass(
+                                horarioNuevo.materia,
+                                horarioNuevo.dia,
+                                horarioNuevo.horaInicio,
+                                horarioNuevo.horaFin
+                            )
+                        ) //.add(contactoHashMap)
+                        .addOnSuccessListener { documentReference ->
+                            Toast.makeText(
+                                this,
+                                R.string.horarioActualizado,
+                                Toast.LENGTH_LONG
+                            )
+                                .show()
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(
+                                this,
+                                "Error al actualizar el horario:-> {$e.message}",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
                 }
-
-                db.collection(COLECCION).document(correo).collection(COLECCION_MATERIAS)
-                    .document(horarioViejo.materia).collection(
-                        COLECCION
-                    ).document(idDocumento)
-                    .set(
-                        HorarioModelClass(
-                            horarioNuevo.materia,
-                            horarioNuevo.dia,
-                            horarioNuevo.horaInicio,
-                            horarioNuevo.horaFin
-                        )
-                    ) //.add(contactoHashMap)
-                    .addOnSuccessListener { documentReference ->
-                        Toast.makeText(this, "Horario actualizado exitosamente", Toast.LENGTH_LONG)
-                            .show()
-                    }
-                    .addOnFailureListener { e ->
-                        Toast.makeText(
-                            this,
-                            "Error al actualizar el horario:-> {$e.message}",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-            }
-    }
+        }
     }
 
-    fun eliminarHorario( correo: String,
-                         horarioViejo: HorarioModelClass) {
+    fun eliminarHorario(
+        correo: String,
+        horarioViejo: HorarioModelClass
+    ) {
 
         val db = Firebase.firestore
 
@@ -574,7 +547,7 @@ class RegistrarHorarioActivity : AppCompatActivity() {
                     .document(idDocumento)
                     .delete()
                     .addOnSuccessListener {
-                        Toast.makeText(this, "Horario eliminado exitosamente", Toast.LENGTH_LONG)
+                        Toast.makeText(this, R.string.horarioEliminadoExitoso, Toast.LENGTH_LONG)
                             .show()
                     }
                     .addOnFailureListener { e ->
@@ -586,6 +559,7 @@ class RegistrarHorarioActivity : AppCompatActivity() {
                     }
             }
     }
+
     private fun getIndex(spinner: Spinner, myString: String): Int {
         for (i in 0 until spinner.count) {
             if (spinner.getItemAtPosition(i).toString().equals(myString, ignoreCase = true)) {
@@ -595,13 +569,13 @@ class RegistrarHorarioActivity : AppCompatActivity() {
         return 0
     }
 
-    private fun devolverId(arrayList: ArrayList<Int>):Int{
-        var id:Int=0
+    private fun devolverId(arrayList: ArrayList<Int>): Int {
+        var id: Int = 0
         arrayList.add(-1)
-        for(i in 1 .. arrayList.size){
+        for (i in 1..arrayList.size) {
 
-            if(i != arrayList[i-1]){
-                id= i
+            if (i != arrayList[i - 1]) {
+                id = i
                 break
             }
 
@@ -611,7 +585,6 @@ class RegistrarHorarioActivity : AppCompatActivity() {
 
         return id
     }
-
 
 
 }

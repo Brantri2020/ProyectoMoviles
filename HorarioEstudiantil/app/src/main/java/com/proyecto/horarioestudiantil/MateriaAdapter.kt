@@ -6,12 +6,11 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 
-class MateriaAdapter (private val context: Activity, private val materias: ArrayList<String>)   : BaseAdapter() {
+class MateriaAdapter(private val context: Activity, private val materias: ArrayList<String>) :
+    BaseAdapter() {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val inflater = context.layoutInflater
         val rowView = inflater.inflate(R.layout.subject_list, null, true)
-
-        //val materias = mutableListOf<String>()
 
 
         val textViewSubject = rowView.findViewById<TextView>(R.id.textViewSubject)
