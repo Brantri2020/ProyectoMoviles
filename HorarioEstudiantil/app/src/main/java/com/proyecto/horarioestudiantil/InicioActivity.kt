@@ -77,39 +77,6 @@ class InicioActivity : AppCompatActivity() {
     }
 
 
-fun nombresEstudiante(correo:String){
-
-    var nombres:String=""
-    var nombre:String=""
-    var apellido:String=""
-    val docRef = db.collection(COLECCION).document(correo)
-
-    docRef.get()
-        .addOnSuccessListener { document ->
-            if (document != null) {
-
-                nombre=document.get("nombre").toString()
-                apellido=document.get("apellido").toString()
-
-                nombres=nombre+" "+apellido
-
-                val actionBar = supportActionBar
-                // Set the action bar title, subtitle and elevation
-                actionBar!!.title = supportActionBar?.title.toString()
-                actionBar.subtitle = nombres
-                actionBar.elevation = 4.0F
-
-
-            } else {
-                // Log.d(TAG, "No such document")
-            }
-        }
-        .addOnFailureListener { exception ->
-            //Log.d(TAG, "get failed with ", exception)
-        }
-
-
-}
 
 
 
