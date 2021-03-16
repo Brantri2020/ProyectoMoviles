@@ -1,0 +1,119 @@
+<resources>
+    <string name="app_name">Horario Estudiantil</string>
+    <string name="nombreApp">Bienvenido a Horario Estudiantil</string>
+    <string name="botonIngreso">Ingresar</string>
+    <string name="correoLogin">Ingrese su correo</string>
+    <string name="contraseñaLogin">Ingrese su contraseña</string>
+    <string name="registroUsuarioTitulo">Registrar nuevo usuario</string>
+    <string name="nombreRegistro">Nombre</string>
+    <string name="apellidoRegistro">Apellido</string>
+    <string name="botonLinkRegistrar">Registrarse</string>
+    <string name="contraseñaIncorrecta">Contraseña incorrecta</string>
+    <string name="correoIncorrecto">Correo incorrecto</string>
+    <string name="camposVacios">Campos Vacíos</string>
+    <string name="correoRegistro">Correo electrónico</string>
+    <string name="contraseña1Registro">Contraseña</string>
+    <string name="contraseña2">Repetir contraseña</string>
+    <string name="registro">Registrar</string>
+    <string name="title_activity_principal">PrincipalActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="inicio">INICIO</string>
+    <string name="registrarHorario">Horarios</string>
+    <string name="verHorario">Ver Horario</string>
+    <string name="registrarRecordatorio">Registrar recordatorio</string>
+    <string name="verRecordatorio">Ver Recordatorios</string>
+    <string name="salir">Salir</string>
+    <string name="registrarHorarioTitulo">Registrar Horario</string>
+    <string name="nombreMateria">Nombre materia</string>
+    <string name="horaMateria">Hora inicio materia</string>
+    <string name="dosPuntos">:</string>
+    <string name="horaFinMateria">Hora fin materia</string>
+    <string name="materia">Materias</string>
+    <string name="seleccionMateria">Seleccione la materia</string>
+    <string name="nombreRecordatorio">Nombre recordatorio</string>
+    <string name="tipoRecordatorio">Tipo de recordatorio</string>
+    <string name="descripcion">Descripción</string>
+    <string name="verRecordatorios">Ver recordatorios</string>
+    <string name="nombreRecordatorioTbl">&#160;Nombre</string>
+    <string name="materiatbl">Materia</string>
+    <string name="tipoRecordatoriotbl">Tipo</string>
+    <string name="descripciontbl">Descripción</string>
+    <string name="hora">Hora</string>
+    <string name="lunes">&#160;&#160;Lunes</string>
+    <string name="martes">&#160;&#160;Martes</string>
+    <string name="miercoles">&#160;Miércoles</string>
+    <string name="viernes">&#160;Viernes</string>
+    <string name="jueves">&#160;&#160;Jueves</string>
+    <string name="sabado">&#160;Sábado</string>
+    <string name="domingo">Domingo</string>
+    <string name="Hora1">7:00\na\n8:00</string>
+    <string name="Hora2">8:00\na\n9:00</string>
+    <string name="Hora3">9:00\na\n10:00</string>
+    <string name="Hora4">10:00\na\n11:00</string>
+    <string name="Hora5">11:00\na\n12:00</string>
+    <string name="Hora6">12:00\na\n13:00</string>
+    <string name="Hora7">13:00\na\n14:00</string>
+    <string name="Hora8">14:00\na\n15:00</string>
+    <string name="Hora9">15:00\na\n16:00</string>
+    <string name="Hora10">16:00\na\n17:00</string>
+    <string name="Hora11">17:00\na\n18:00</string>
+    <string name="Hora12">18:00\na\n19:00</string>
+    <string name="Hora13">19:00\na\n20:00</string>
+    <string name="Hora14">20:00\na\n21:00</string>
+    <string name="tituloRegistrarMateria">Registrar materia</string>
+
+    <string name="registrar">Registrar</string>
+    <string name="actualizar">Actualizar</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="dia">Seleccione el día</string>
+    <string name="registrarHora">Registrar horario</string>
+    <string name="eliminarRecordatorio">Eliminar Recordatorio</string>
+    <string name="eliminarMateria">Eliminar materia</string>
+    <string name="eliminarMateriaBtn">Eliminar materia</string>
+    <string name="eliminarMateriaInicio">Eliminar materia</string>
+
+    <string name="spinLunes">Lunes</string>
+    <string name="spinMartes">Martes</string>
+    <string name="spinMiercoles">Miercoles</string>
+    <string name="spinJueves">Jueves</string>
+    <string name="spinViernes">Viernes</string>
+    <string name="spinSabado">Sabado</string>
+    <string name="spinDomingo">Domingo</string>
+    <string name="registrarRecordatori">Registrar Recordatorio</string>
+
+    <!--HORARIO-->
+    <string name="listHorario_Nombre">Nombre</string>
+    <string name="listHorario_Dia">Dia</string>
+    <string name="listHorario_Inicio">Hora inicio</string>
+    <string name="listHorario_Fin">Hora fin</string>
+
+
+    <!--LOGIN-->
+    <string name="editTextTextEmailAddress_hint">Ingrese el correo</string>
+    <string name="editTextPassword_hint">Ingrese la contraseña</string>
+    <string name="email_NoValido">Email no válido</string>
+    <string name="noExisteUsuario">El usuario introducido no existe</string>
+    <string name="Recordarme">Recordarme</string>
+
+    <!--Registro-->
+    <string name="Registrado">Registrado con éxito</string>
+    <string name="usuarioCreado">Usuario registrado con éxito</string>
+    <string name="passwordLongitud">La contraseña debe contener como mínimo 8 caracteres</string>
+    <string name="passwordNoCoinciden">Las contraseñas no coinciden</string>
+    <string name="nombreVacio">Introduzca su nombre</string>
+    <string name="apellidoVacio">Introduzca su apellido</string>
+    <string name="Materia">materia</string>
+    <string name="Nombre">nombre</string>
+    <string name="tipoRecord">tipo de recordatorio</string>
+    <string name="descripcionRecord">descripcion</string>
+    <string name="recordatorios">Recordatorios</string>
+
+
+</resources>
