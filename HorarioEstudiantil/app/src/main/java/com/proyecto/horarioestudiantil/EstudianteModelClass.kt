@@ -5,3 +5,7 @@ data class EstudianteModelClass(var Nombre: String, var Apellido: String, var Co
     constructor():this("","", "")
 
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> main

@@ -52,11 +52,19 @@ class LoginActivity : AppCompatActivity() {
         //Inicializo llave
         val masterKeyAlias: String = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
         val sharedPreferences = EncryptedSharedPreferences.create(
+<<<<<<< HEAD
             ARCHIVO_PREFERENCES,//filename
             masterKeyAlias,
             this,//context
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+=======
+                ARCHIVO_PREFERENCES,//filename
+                masterKeyAlias,
+                this,//context
+                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+>>>>>>> main
         )
 
         //val sharedPref = getPreferences(Context.MODE_PRIVATE)
@@ -69,8 +77,37 @@ class LoginActivity : AppCompatActivity() {
         if (login.toString() != "" && password.toString() != "") {
             checkRecordarme.isChecked = true
         }
+<<<<<<< HEAD
+=======
 
 
+        buttonLogin.setOnClickListener {
+            if (!ValidarDatos()) {
+                return@setOnClickListener
+            }else{
+>>>>>>> main
+
+            }
+            if (checkRecordarme.isChecked) {
+                /*sharedPref
+                    .edit()
+                    .putString(LOGIN_KEY,editTextTextEmailAddress.text.toString())
+                    .putString(PASSWORD_KEY,editTextTextPassword.text.toString())
+                    .apply()
+                */
+                sharedPreferences
+                        .edit()
+                        .putString(LOGIN_KEY, editTexCorreo.text.toString())
+                        .putString(PASSWORD_KEY, editTexPassword.text.toString())
+                        .apply()
+            } else {
+                val editor = sharedPreferences.edit()
+                editor.putString(LOGIN_KEY, "")
+                editor.putString(PASSWORD_KEY, "")
+                editor.commit()
+            }
+
+<<<<<<< HEAD
         buttonLogin.setOnClickListener {
             if (!ValidarDatos()) {
                 return@setOnClickListener
@@ -97,10 +134,17 @@ class LoginActivity : AppCompatActivity() {
             }
 
             AutenticarUsuario(editTexCorreo.text.toString(), editTexPassword.text.toString())
+=======
+            AutenticarUsuario(editTexCorreo.text.toString(), editTexPassword.text.toString())
+
+
+        }
+>>>>>>> main
 
 
         }
 
+<<<<<<< HEAD
 
 
         buttonLinkRegister.setOnClickListener{
@@ -132,6 +176,37 @@ class LoginActivity : AppCompatActivity() {
 
         fun CharSequence?.isValidEmail() =
             !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
+=======
+        buttonLinkRegister.setOnClickListener{
+            val i = Intent(this, RegisterActivity::class.java)
+            startActivity(i)
+
+        }
+    }
+
+    fun AutenticarUsuario(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        var intent = Intent(this, InicioActivity::class.java)
+                        intent.putExtra(CORREO_ESTUDIANTE,email)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        Toast.makeText(baseContext, task.exception!!.message,
+                                Toast.LENGTH_SHORT).show()
+                        editTexCorreo.setText("")
+                        editTexPassword.setText("")
+                    }
+                }
+    }
+
+
+    fun ValidarDatos(): Boolean {
+
+        fun CharSequence?.isValidEmail() =
+                !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
+>>>>>>> main
         if (editTexCorreo.text.isNullOrEmpty()) {
             editTexCorreo.setError(getString(R.string.editTextTextEmailAddress_hint))
             editTexCorreo.requestFocus()
